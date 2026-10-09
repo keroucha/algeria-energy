@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <form method="post" action="{{ url_for('enter') }}" novalidate>
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+    <label for="lang">{{ t.lang }}</label>
+    <select id="lang" name="lang" onchange="location.href='{{ url_for('index') }}?lang='+this.value">
+      {% for code, name in langs.items() %}
+        <option value="{{ code }}" {% if code == lang %}selected{% endif %}>{{ name }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="email">{{ t.email }}</label>
+    <input id="email" type="email" name="email" value="{{ email }}" required
+           autocomplete="email" dir="ltr" placeholder="name@example.com">
+
+    {% if error %}<p class="err" role="alert">{{ error }}</p>{% endif %}
+    <button type="submit">{{ t.submit }}</button>
+  </form>
+</section>
+<section class="about"><p>{{ t.about }}</p></section>
+{% endblock %}
